@@ -105,11 +105,93 @@ namespace FundamentosCSHARP
 
             string myJson = File.ReadAllText("objeto.txt");
 
-            Cerveza cerveza = JsonSerializer.Deserialize<Cerveza>(myJson);
+            var cerveza = JsonSerializer.Deserialize<Cerveza>(myJson);
         }
-        static void Main(string[] args)
-        {
 
+        async Task GetAllExampleJson()
+        {
+            string url = "https://jsonplaceholder.typicode.com/posts";
+            HttpClient client = new HttpClient();
+
+            var response = await client.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+
+                var posts = JsonSerializer.Deserialize<List<Post>>(content);
+
+
+
+            }
+        }
+
+        async Task PostExampleJson()
+        {
+            string url = "https://jsonplaceholder.typicode.com/posts";
+            HttpClient client = new HttpClient();
+
+            Post post = new Post();
+            post.userId = 50;
+            post.title = "titulo de saludo 1 ";
+            post.body = "Hola como están desde el body 1";
+
+            var data = JsonSerializer.Serialize<Post>(post);
+
+            HttpContent content = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
+            var httpResponse = await client.PostAsync(url, content);
+
+            if (httpResponse.IsSuccessStatusCode)
+            {
+                var result = await httpResponse.Content.ReadAsStringAsync();
+
+                var postResult = JsonSerializer.Deserialize<Post>(result);
+
+            }
+        }
+
+        async Task PutExampleJson()
+        {
+            string url = "https://jsonplaceholder.typicode.com/posts/99";
+            HttpClient client = new HttpClient();
+
+            Post post = new Post();
+            post.userId = 50;
+            post.title = "titulo de saludo 1 ";
+            post.body = "Hola como están desde el body 1";
+
+            var data = JsonSerializer.Serialize<Post>(post);
+
+            HttpContent content = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
+            var httpResponse = await client.PutAsync(url, content);
+
+            if (httpResponse.IsSuccessStatusCode)
+            {
+                var result = await httpResponse.Content.ReadAsStringAsync();
+
+                var postResult = JsonSerializer.Deserialize<Post>(result);
+
+            }
+        }
+
+        async Task DeleteExampleJson()
+        {
+            string url = "https://jsonplaceholder.typicode.com/posts/99";
+            HttpClient client = new HttpClient();
+
+
+            var httpResponse = await client.DeleteAsync(url);
+
+            if (httpResponse.IsSuccessStatusCode)
+            {
+                var result = await httpResponse.Content.ReadAsStringAsync();
+
+                var postResult = JsonSerializer.Deserialize<Post>(result);
+
+            }
+        }
+        static async Task Main(string[] args)
+        {
            
 
 
