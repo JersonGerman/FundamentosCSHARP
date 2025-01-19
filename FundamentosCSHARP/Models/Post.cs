@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FundamentosCSHARP.Models
 {
-    internal class Post
+    internal class Post : IRequestable
     {
         public int userId { get; set; }
         public int id { get; set; }

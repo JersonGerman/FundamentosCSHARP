@@ -1,8 +1,12 @@
 ﻿using System;
 
-using FundamentosCSHARP.Models;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+
+using System.Linq;
+
+using FundamentosCSHARP.Models;
+using FundamentosCSHARP.Service;
 
 namespace FundamentosCSHARP
 {
@@ -190,11 +194,61 @@ namespace FundamentosCSHARP
 
             }
         }
+
+        async Task ClassGeneric()
+        {
+            Cerveza cerveza = new Cerveza() { Alcohol = 5, Cantidad = 10, Marca = "Pilsen", Nombre = "Pilsen de trigo" };
+
+            var post = new Post() { userId = 50, title = "titulo del post", body = "body del post" };
+
+            SendRequest<Cerveza> service = new SendRequest<Cerveza>();
+
+            var CervezaResponse = await service.Send(cerveza);
+        }
+
+        void HowUseLink()
+        {
+            List<int> numeros = new List<int>() { 1, 9, 3, 4, 7, 6, 5, 8, 2 };
+
+            //var numero_5 = numeros.Where(x => x == 5).FirstOrDefault();
+
+            //var numerosOrdenados = numeros.OrderBy(x => x).ToList();
+            //var numerosOrdenados = numeros.OrderBy(x => x);
+            //var suma = numeros.Sum(x => x);
+            //var suma = numeros.Average(x => x);
+
+            //Console.WriteLine(suma);
+            //foreach (var item in numerosOrdenados)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+
+            List<Cerveza> cervezas = new List<Cerveza>() {
+                new Cerveza(){ Alcohol=7, Cantidad=20, Nombre="Cerveza de cebada", Marca="Pilsen"} ,
+                new Cerveza(){ Alcohol=5, Cantidad=10, Nombre="Cerveza de Malta", Marca="Corona"} ,
+                new Cerveza(){ Alcohol=8, Cantidad=15, Nombre="Cerveza de Arroz", Marca="Backup"} ,
+                new Cerveza(){ Alcohol=12, Cantidad=30, Nombre="Cerveza de Higo", Marca="Cristal"} ,
+            };
+
+            //var ceverzasOrdenadas = from d in cervezas
+            //                        orderby d.Nombre
+            //                        select d;
+            var ceverzasOrdenadas = from d in cervezas
+                                    where d.Nombre == "Cerveza de Malta"
+                                    select d;
+
+            int cantidad = ceverzasOrdenadas.Count();
+
+            foreach (var cerveza in ceverzasOrdenadas)
+            {
+                Console.WriteLine($"{cerveza.Nombre} {cerveza.Marca}");
+            }
+        }
         static async Task Main(string[] args)
         {
+
            
-
-
 
         }
 

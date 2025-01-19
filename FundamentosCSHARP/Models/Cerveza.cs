@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace FundamentosCSHARP.Models
 {
-    internal class Cerveza: Bebida, IBebidaAlcoholica
+    internal class Cerveza: Bebida, IBebidaAlcoholica, IRequestable
     {
         public int Alcohol { get; set; }
         public string Marca { get; set; }
+        public int id { get; set; }
 
         public void MaxRecomendado()
         {
